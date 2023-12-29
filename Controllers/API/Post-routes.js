@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../../models');
-const withAuth =  require('../../Utils/auth');
+const withAuth = require('../../Utils/auth');
 
 // all posts route
 router.get('/', (req, res) => {
@@ -22,18 +22,18 @@ router.get('/', (req, res) => {
             }
         ]
     })
-    .then(allPostData => res.json(allPostData))
-    .catch(err => {
-        console.log(err)
-        res.status(500).json(err)
-    })
+        .then(allPostData => res.json(allPostData))
+        .catch(err => {
+            console.log(err)
+            res.status(500).json(err)
+        })
 });
 
 // single post route
 router.get('/:id', (req, res) => {
     Post.findOne({
         where: {
-            id: req.params.id 
+            id: req.params.id
         },
         attributes: ['id', 'title', 'post_content', 'user_id', 'date_created', 'date_updated'],
         include: [
@@ -43,15 +43,31 @@ router.get('/:id', (req, res) => {
             }
         ]
     })
-    .then(onePostData => {
-        f (!onePostData) {
-            res.status(404).json({ message: 'Unable to find post'});
-            return;
-        }
-        res.json(onePostData);
+        .then(onePostData => {
+            f(!onePostData); {
+                res.status(404).json({ message: 'Unable to find post' });
+                return;
+            }
+            res.json(onePostData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
+})
+
+// create a blogpost route
+router.post('/', withAuth, (req, res) => {
+    console.log(req.body)
+    Post.create({
+        title: req.body.title,
+        post_content: req.body.post_content
     })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
+        .then(newPostData => {
+            res.json(newPostData)
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            })
+        })
 })
