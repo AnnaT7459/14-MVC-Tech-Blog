@@ -116,3 +116,25 @@ router.put("/:id", withAuth, (req, res) => {
       res.status(500).json(err);
     });
 });
+
+// delete a blog post route
+router.delete("/:id", withAuth, (req, res) => {
+  Post.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then((deletePostData) => {
+      if (!deletePostData) {
+        res.status(404).json({ message: "Unable to find post" });
+        return;
+      }
+      res.json(deletePostData);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+module.exports = router;
