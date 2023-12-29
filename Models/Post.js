@@ -1,10 +1,9 @@
-// Acceptance Criteria: display username and date created
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../Config/Connection');
 
-class Comment extends Model {}
+class Post extends Model {}
 
-Comment.init(
+Post.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -12,37 +11,39 @@ Comment.init(
             primaryKey: true,
             autoIncrement: true,
         },
-        comment_content: {
-            type: DataTypes.TEXT,
+        title: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
-        date_created: {
-            type: DataTypes.DATE,
+        post_content: {
+            type: DataTypes.TEXT,
             allowNull: false,
-            defaultValue: DataTypes.NOW,
         },
         user_id: {
             type: DataTypes.INTEGER,
             references: {
                 model: 'user',
                 key: 'id',
-            },
+            }
         },
-        post_id: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'post',
-                key: 'id',
-            },
+        date_created: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
+        date_updated: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
         },
     },
     {
         sequelize,
-        timestamps: false,
+        timestamps: true,
         freezeTableName: true,
         underscored: true,
-        modelName: 'Comment',
+        modelName: 'post',
     }
 );
 
-module.exports = Comment;
+module.exports = Post;
