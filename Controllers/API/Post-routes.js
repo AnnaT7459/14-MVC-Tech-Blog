@@ -28,3 +28,30 @@ router.get('/', (req, res) => {
         res.status(500).json(err)
     })
 });
+
+// single post route
+router.get('/:id', (req, res) => {
+    Post.findOne({
+        where: {
+            id: req.params.id 
+        },
+        attributes: ['id', 'title', 'post_content', 'user_id', 'date_created', 'date_updated'],
+        include: [
+            {
+                model: User,
+                attribtues: ['name']
+            }
+        ]
+    })
+    .then(onePostData => {
+        f (!onePostData) {
+            res.status(404).json({ message: 'Unable to find post'});
+            return;
+        }
+        res.json(onePostData);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+})
