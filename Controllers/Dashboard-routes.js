@@ -48,3 +48,10 @@ router.get("/", (req, res) => {
         res.status(500).json(err);
       });
   });
+
+//   new blog post option on dashboard
+router.get("/new", (req, res) => {
+    res.render("new-post", { name: req.session.name });
+});
+
+module.exports = router;
