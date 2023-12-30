@@ -64,11 +64,11 @@ router.get("/:id", (req, res) => {
     ],
   })
     .then((onePostData) => {
-      f(!onePostData);
+      if(!onePostData);
       {
         res.status(404).json({ message: "Unable to find post" });
         return;
-      }
+      } 
       res.json(onePostData);
     })
     .catch((err) => {
