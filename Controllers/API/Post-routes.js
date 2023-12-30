@@ -107,7 +107,7 @@ router.put("/:id", withAuth, (req, res) => {
   )
     .then((updatePostData) => {
       if (!updatePostData) {
-        res.status(404).jsoon({ message: "Unable to find post" });
+        res.status(404).json({ message: "Unable to find post" });
         return;
       }
       res.json(updatePostData);
