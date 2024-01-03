@@ -5,7 +5,7 @@ const sequelize = require("../Config/Connnection");
 
 // login
 router.get("/login", (req, res) => {
-  if (req.session.loggedIn) {
+  if (req.session.logged_in) {
     res.redirect("/");
   } else {
     res.render("login");
@@ -55,7 +55,7 @@ router.get("/", (req, res) => {
   })
     .then((allPostData) => {
       const userPosts = allPostData.map((post) => post.get({ plain: true }));
-      res.render("dashboard", { userPosts, loggedIn: true });
+      res.render("dashboard", { userPosts, logged_in: true });
     })
     .catch((err) => {
       console.log(err);
