@@ -9,9 +9,4 @@ module.exports = {
 
 
   const handlebars = require('handlebars');
-  const moment = require('moment');
 
-  // helper to format dates
-handlebars.registerHelper('formatDate', function (date) {
-  return moment(date).format('YYYY-MM-DD'); 
-});

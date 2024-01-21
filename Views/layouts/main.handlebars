@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+{{!-- <<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -38,5 +38,47 @@
   <script src="/js/logout.js"></script>
   {{/if}}
 </body>
+
+</html> --}}
+
+    <meta charset="UTF-8" />
+    <title>Tech Blog</title>
+{{!-- bootstrap? --}}
+<link rel="stylesheet" href="/css/jass.css">
+  </head>
+
+  <body>
+    <div class="">
+      <header class="display-flex justify-space-between align-center p-2">
+        <h2>
+          <a href="/">Home</a>
+        </h2>
+        <nav>
+          {{!--  --}}
+          {{#if logged_in}}
+            <h2>
+              <a href="/dashboard">Dashboard</a>
+            </h2>
+            <button class="outBtn" id="logout">Logout</button>
+          {{else}}
+            <h2>
+              <a href="/login">Login</a>
+            </h2>
+          {{/if}}
+        </nav>
+      </header>
+      <h1 class="display-flex justify-space-between align-center p-2">Tech
+        Blog
+      </h1>
+      <main class="container container-fluid mt-5">
+        {{{body}}}
+      </main>
+      <footer>
+      </footer>
+    </div>
+    {{#if logged_in}}
+      <script src="/js/logout.js"></script>
+    {{/if}}
+  </body>
 
 </html>
