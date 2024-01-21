@@ -84,6 +84,24 @@ router.get("/post/:id", async (req, res) => {
   }
 });
 
+// makes sure user is logged in in order to access dashboard
+router.get("/dashboard", withAuth, async (req, res) => {
+  try {
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ["password"] },
+      include: [{ model: Post }],
+    });
+
+    const user = userData.get({ plain: true });
+    res.render("dashboard", {
+      ...user,
+      logged_in: true,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 //   new blog post option on dashboard
 router.get("/new", (req, res) => {
@@ -93,10 +111,11 @@ router.get("/new", (req, res) => {
 // login
 router.get("/login", (req, res) => {
   if (req.session.logged_in) {
-    res.redirect("/");
-  } else {
-    res.render("login");
-  }
+    res.redirect("/dashboard");
+    return;
+  } 
+
+  res.render("login");
 });
 
 module.exports = router;
