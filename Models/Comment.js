@@ -1,6 +1,6 @@
 // Acceptance Criteria: display username and date created
 const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../Config/Connection");
+const sequelize = require("../Config/Connnection");
 
 class Comment extends Model {}
 

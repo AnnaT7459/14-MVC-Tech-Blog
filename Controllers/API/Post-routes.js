@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Post, Comment } = require('../../models');
+const { Post, Comment } = require("../../models");
 
 
 // update a blog post route - 14 Student Mini Project for reference

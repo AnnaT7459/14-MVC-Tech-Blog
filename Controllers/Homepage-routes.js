@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const { Post, User, Comment } = require("../../models");
-const withAuth = require("../../Utils/auth");
+const { Post, User, Comment } = require("../models");
+const withAuth = require("../Utils/auth");
 
 
 // sign up
@@ -60,7 +60,7 @@ router.get("/", async (req, res) => {
 
 // get one blog post by id (recoded as try/catch statement/exception)
 router.get("/post/:id", async (req, res) => {
-  try {
+  // try {
     const onePostData = await Post.findByPk(req.params.id, {
       include: [
         {
@@ -68,20 +68,21 @@ router.get("/post/:id", async (req, res) => {
           attributes: ["name"],
         },
         {model: Comment,
-        attributes: [id, comment_content, user_id],
+        attributes: ["id", "comment_content", "user_id"],
       }
       ],
     });
 
     const post = onePostData.get({ plain: true })
+    console.log(post)
     res.render("post", {
       ...post,
       logged_in: req.session.logged_in,
       userID: req.session.user_id,
     });
-  } catch (err) {
-    res.status(500).json(err);
-  }
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
 });
 
 // makes sure user is logged in in order to access dashboard
